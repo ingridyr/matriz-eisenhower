@@ -1,11 +1,15 @@
 from http import HTTPStatus
+from flask import jsonify, request
+
 from sqlalchemy.exc import IntegrityError
+from sqlalchemy.orm.session import Session
+
+from app.configs.database import db
 from app.models.categories_model import Category
 
-from flask import jsonify, request, current_app
 
 def create_category():
-    session = current_app.db.session
+    session: Session = db.session()
 
     data = request.get_json()
 
@@ -23,7 +27,7 @@ def create_category():
 
 
 def update_category(id):
-    session = current_app.db.session
+    session: Session = db.session()
     data = request.get_json()
 
     category = session.query(Category).get(id)
@@ -41,7 +45,7 @@ def update_category(id):
 
 
 def delete_category(id):
-    session = current_app.db.session
+    session: Session = db.session()
 
     category = session.query(Category).get(id)
 
