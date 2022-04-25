@@ -26,4 +26,5 @@ class Task(db.Model):
     eisenhower_id = Column(Integer, ForeignKey("eisenhowers.id"), nullable=False)
 
     tasks_eisenhowers = relationship("Eisenhower", back_populates="eisenhowers")
-    categories = relationship("Category", secondary="tasks_categories", back_populates="tasks")
+    
+    categories = relationship("Category", secondary="tasks_categories")

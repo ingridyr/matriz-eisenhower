@@ -55,11 +55,9 @@ def create_task():
 
             session.add(category)
             session.commit()
-            #atribuir fk à tabela tasks_categories
         
         if category:
             print('ja existe')
-            #atribuir fk à tabela tasks_categories
 
     try:
         classification = Eisenhower.query.filter_by(id=eisenhower_type_id).first().type

@@ -1,9 +1,9 @@
 from app.configs.database import db
+from sqlalchemy import Column, Integer, ForeignKey
 
-tasks_categories= db.Table('tasks_categories',
-
-    db.Column("id", db.Integer, primary_key=True),
-    db.Column("task_id", db.Integer, db.ForeignKey("tasks.id")),
-    db.Column("category_id", db.Integer, db.ForeignKey("categories.id"))
-
+tasks_categories= db.Table(
+    'tasks_categories',
+    Column("id", Integer, primary_key=True),
+    Column("task_id", Integer, ForeignKey("tasks.id")),
+    Column("category_id", Integer, ForeignKey("categories.id"))
 )
