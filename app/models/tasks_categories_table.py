@@ -1,16 +1,9 @@
 from app.configs.database import db
-from sqlalchemy import Column, Integer, ForeignKey
-from dataclasses import dataclass
 
-@dataclass
-class Task_category(db.Model):
-    id: int
-    task_id: int
-    category_id: int
+tasks_categories= db.Table('tasks_categories',
 
-    __tablename__ = "tasks_categories"
+    db.Column("id", db.Integer, primary_key=True),
+    db.Column("task_id", db.Integer, db.ForeignKey("tasks.id")),
+    db.Column("category_id", db.Integer, db.ForeignKey("categories.id"))
 
-    id = Column(Integer, primary_key=True)
-
-    task_id = Column(Integer, ForeignKey("tasks.id"), nullable=False)
-    category_id = Column(Integer, ForeignKey("categories.id"), nullable=False)
+)

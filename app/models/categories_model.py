@@ -1,6 +1,8 @@
 from app.configs.database import db
+
 from sqlalchemy import Column, Integer, String
 from sqlalchemy.orm import relationship
+
 from dataclasses import dataclass
 
 @dataclass
@@ -15,4 +17,5 @@ class Category(db.Model):
     name = Column(String(100), nullable=False, unique=True)
     description = Column(String)
 
-    task_category = relationship("Task_category", back_populates="task_category")
+    tasks = relationship("Task", secondary="tasks_categories", back_populates="categories")
+

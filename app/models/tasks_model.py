@@ -25,4 +25,5 @@ class Task(db.Model):
     urgency = Column(Integer)
     eisenhower_id = Column(Integer, ForeignKey("eisenhowers.id"), nullable=False)
 
-    eisenhower = relationship("Eisenhower", back_populates="eisenhower", uselist=False)
+    tasks_eisenhowers = relationship("Eisenhower", back_populates="eisenhowers")
+    categories = relationship("Category", secondary="tasks_categories", back_populates="tasks")
