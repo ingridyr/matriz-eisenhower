@@ -3,6 +3,8 @@ from app.configs.database import db
 from sqlalchemy import Column, Integer, String, ForeignKey
 from sqlalchemy.orm import relationship
 
+from app.models.tasks_categories_table import tasks_categories
+
 from dataclasses import dataclass
 
 @dataclass
@@ -25,6 +27,6 @@ class Task(db.Model):
     urgency = Column(Integer)
     eisenhower_id = Column(Integer, ForeignKey("eisenhowers.id"), nullable=False)
 
-    tasks_eisenhowers = relationship("Eisenhower", back_populates="eisenhowers")
+    eisenhower = relationship("Eisenhower", backref="tasks")
     
-    categories = relationship("Category", secondary="tasks_categories")
+    categories = relationship("Category", secondary=tasks_categories, back_populates="tasks")

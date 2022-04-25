@@ -48,17 +48,19 @@ def create_task():
         category = Category.query.filter(Category.name == item).first()
 
         if category == None and item != None:
-            category = Category(**{
-                "name": item,
-                "description": 'No content'
-            })
-
+            category: Category = Category(
+                name=item,
+                description='No content')
+            
+            category.tasks.append(task)
             session.add(category)
             session.commit()
         
         if category:
-            print('ja existe')
-
+            category.tasks.append(task)
+            session.add(category)
+            session.commit()
+            
     try:
         classification = Eisenhower.query.filter_by(id=eisenhower_type_id).first().type
 

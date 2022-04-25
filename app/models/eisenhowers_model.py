@@ -15,4 +15,4 @@ class Eisenhower(db.Model):
     id = Column(Integer, primary_key=True)
     type = Column(String(100))
 
-    eisenhowers = relationship("Task", back_populates="tasks_eisenhowers")
+    #eisenhower = relationship("Task", back_populates="tasks")

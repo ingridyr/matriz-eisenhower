@@ -4,6 +4,8 @@ from flask import jsonify, request
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm.session import Session
 
+from psycopg2.errors import UniqueViolation
+
 from app.configs.database import db
 from app.models.categories_model import Category
 
@@ -13,17 +15,17 @@ def create_category():
 
     data = request.get_json()
 
-    category = Category(**data)
-
-    session.add(category)
-
     try:
+        category = Category(**data)
+
+        session.add(category)
         session.commit()
 
         return jsonify(category), HTTPStatus.CREATED
         
-    except IntegrityError:
-        return {"error": "Category already exists"}, HTTPStatus.CONFLICT
+    except IntegrityError as e:
+        if type(e.orig) == UniqueViolation:
+            return {"error": "Category already exists"}, HTTPStatus.CONFLICT
 
 
 def update_category(id):
