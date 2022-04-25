@@ -1,19 +1,18 @@
 from app.configs.database import db
-from sqlalchemy import Column, Integer, String, DateTime
+from sqlalchemy import Column, Integer, String
+from sqlalchemy.orm import relationship
 from dataclasses import dataclass
 
 @dataclass
 class Category(db.Model):
     id: int
     name: str
-    email: str
-    phone: str
-    creation_date: str
-    last_visit: str
-    visits: int
+    description: str
 
     __tablename__ = "categories"
 
     id = Column(Integer, primary_key=True)
     name = Column(String(100), nullable=False, unique=True)
     description = Column(String)
+
+    task_category = relationship("Task_category", back_populates="task_category")

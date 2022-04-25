@@ -1,16 +1,19 @@
 from app.configs.database import db
-from sqlalchemy import Column, Integer, String, DateTime
+
+from sqlalchemy import Column, Integer, String, ForeignKey
+from sqlalchemy.orm import relationship
+
 from dataclasses import dataclass
 
 @dataclass
 class Task(db.Model):
     id: int
     name: str
-    email: str
-    phone: str
-    creation_date: str
-    last_visit: str
-    visits: int
+    description: str
+    duration: int
+    importance: int
+    urgency: int
+    eisenhower_id: int
 
     __tablename__ = "tasks"
 
@@ -20,4 +23,6 @@ class Task(db.Model):
     duration = Column(Integer)
     importance = Column(Integer)
     urgency = Column(Integer)
-    #fk#eisenhower_id = Column(Integer, nullable=False)
+    eisenhower_id = Column(Integer, ForeignKey("eisenhowers.id"), nullable=False)
+
+    eisenhower = relationship("Eisenhower", back_populates="eisenhower", uselist=False)
