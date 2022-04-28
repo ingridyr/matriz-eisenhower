@@ -11,7 +11,6 @@ from psycopg2.errors import UniqueViolation
 
 from sqlalchemy.exc import IntegrityError
 from sqlalchemy.orm.session import Session
-from sqlalchemy.orm import Query
 
 def get_eisenhower(importance, urgency):
 
@@ -151,9 +150,9 @@ def update_task(id):
 
 def delete_task(id):
     session: Session = db.session()
-    task = Task.query.get(id)
+    task: Task = Task.query.get(id)
 
-    if not task:
+    if task == None:
         return {"error": "Task not found"}, HTTPStatus.NOT_FOUND
 
     session.delete(task)
