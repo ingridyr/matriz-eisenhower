@@ -7,7 +7,6 @@ from app.models.tasks_categories_table import tasks_categories
 from app.configs.database import db
 
 def retrieve_all():
-    #query = db.session.query(Category, Task).select_from(Category).join(tasks_categories).join(Task).all()
     query = db.session.query(Category).all()
     list_categories = []
 
@@ -30,7 +29,5 @@ def retrieve_all():
             category["tasks"].append(task)
 
         list_categories.append(category)
-
-    #print(query)
 
     return jsonify(list_categories)
