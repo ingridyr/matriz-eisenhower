@@ -16,7 +16,9 @@ def create_category():
     data = request.get_json()
 
     try:
+        data['name'] = data['name'].title()
         category = Category(**data)
+        print(category)
 
         session.add(category)
         session.commit()
@@ -32,16 +34,33 @@ def update_category(id):
     session: Session = db.session()
     data = request.get_json()
 
-    category = session.query(Category).get(id)
+    try:
+        if data['name']:
+            data['name'] = data['name'].title()
 
-    if category == None:
-        return {"error": "Category id not found"}, HTTPStatus.NOT_FOUND
+            category = session.query(Category).get(id)
 
-    for key, value in data.items():
-        setattr(category, key, value)
+            if category == None:
+                return {"error": "Category id not found"}, HTTPStatus.NOT_FOUND
 
-    session.add(category)
-    session.commit()
+            for key, value in data.items():
+                setattr(category, key, value)
+
+            session.add(category)
+            session.commit()
+
+    except:
+
+        category = session.query(Category).get(id)
+
+        if category == None:
+            return {"error": "Category id not found"}, HTTPStatus.NOT_FOUND
+
+        for key, value in data.items():
+            setattr(category, key, value)
+
+        session.add(category)
+        session.commit()
 
     return jsonify(category), HTTPStatus.OK
 

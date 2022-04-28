@@ -19,6 +19,4 @@ class Category(db.Model):
     name = Column(String(100), nullable=False, unique=True)
     description = Column(String)
 
-    #tasks = relationship("Task", secondary="tasks_categories", backref="categories")
-
     tasks = relationship("Task", secondary=tasks_categories, back_populates="categories")
